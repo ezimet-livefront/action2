@@ -52,9 +52,11 @@ async function run() {
 
     const commentswiftFilePath = path.join(__dirname, "comment.swift");
     const token = core.getInput("token", { required: true });
-    const repository = github.context.payload.repository?.name ?? "";
-    const issueNumber = github.context.payload.issue?.number ?? 0;
-    const owner = github.context.payload.repository?.owner.login ?? "";
+    const repository =
+      github.context.payload.pull_request?.base.repo.name ?? "";
+    const issueNumber = github.context.payload.pull_request?.number ?? 0;
+    const owner =
+      github.context.payload.pull_request?.base.repo.owner.login ?? "";
 
     if (repository && issueNumber && owner) {
       await exec.exec(
