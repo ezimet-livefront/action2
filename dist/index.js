@@ -1,4 +1,4 @@
-/******/ (() => { // webpackBootstrap
+require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 951:
@@ -322,11 +322,13 @@ const macos = __importStar(__nccwpck_require__(4713));
 const linux = __importStar(__nccwpck_require__(7419));
 const windows = __importStar(__nccwpck_require__(6414));
 const get_version_1 = __nccwpck_require__(951);
+const exec = __importStar(__nccwpck_require__(1514));
 async function run() {
     try {
         const requestedVersion = core.getInput("swift-version", { required: true });
         let platform = await system.getSystem();
         let version = versions.verify(requestedVersion, platform);
+        core.info("hello!");
         switch (platform.os) {
             case system.OS.MacOS:
                 await macos.install(version, platform);
@@ -344,6 +346,17 @@ async function run() {
         else {
             core.error(`Failed to setup requested swift version. requestd: ${version}, actual: ${current}`);
         }
+        // run `./run.sh` script file and print the output to as info
+        await exec.exec(`./run.sh`, [], {
+            listeners: {
+                stdout: (data) => {
+                    core.info(data.toString());
+                },
+                stderr: (data) => {
+                    core.info(data.toString());
+                },
+            },
+        });
     }
     catch (error) {
         let dump;
@@ -17242,3 +17255,4 @@ module.exports = JSON.parse('{"/etc/fedora-release":["Fedora"],"/etc/redhat-rele
 /******/ 	
 /******/ })()
 ;
+//# sourceMappingURL=index.js.map

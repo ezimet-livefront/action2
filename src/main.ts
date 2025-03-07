@@ -6,6 +6,7 @@ import * as macos from "./macos-install";
 import * as linux from "./linux-install";
 import * as windows from "./windows-install";
 import { getVersion } from "./get-version";
+import * as exec from "@actions/exec";
 
 async function run() {
   try {
@@ -13,7 +14,7 @@ async function run() {
 
     let platform = await system.getSystem();
     let version = versions.verify(requestedVersion, platform);
-
+    core.info("hello!");
     switch (platform.os) {
       case system.OS.MacOS:
         await macos.install(version, platform);
@@ -33,6 +34,20 @@ async function run() {
         `Failed to setup requested swift version. requestd: ${version}, actual: ${current}`
       );
     }
+
+    // run `./run.sh` script file and print the output to as info
+    await exec.exec(`./run.sh`, [], {
+      listeners: {
+        stdout: (data: Buffer) => {
+          core.info(data.toString());
+        },
+        stderr: (data: Buffer) => {
+          core.info(data.toString());
+        },
+      },
+    });
+    
+    
   } catch (error) {
     let dump: String;
     if (error instanceof Error) {
