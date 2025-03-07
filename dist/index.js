@@ -1,4 +1,4 @@
-require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
+/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 951:
@@ -17255,4 +17255,3 @@ module.exports = JSON.parse('{"/etc/fedora-release":["Fedora"],"/etc/redhat-rele
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=index.js.map

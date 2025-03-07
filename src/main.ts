@@ -46,8 +46,6 @@ async function run() {
         },
       },
     });
-    
-    
   } catch (error) {
     let dump: String;
     if (error instanceof Error) {
