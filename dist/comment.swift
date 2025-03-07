@@ -210,7 +210,7 @@ func getCommentID(for comment: Comment) async throws -> Comment.ID? {
     urlRequest.httpMethod = "GET"
 
     let data = try await URLSession.shared.data(for: urlRequest)
-
+    print(data)
     let comments = try JSONDecoder().decode([GitHubComment].self, from: data.0)
     for comment in comments {
         print(comment)
