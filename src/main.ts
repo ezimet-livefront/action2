@@ -8,6 +8,7 @@ import * as linux from "./linux-install";
 import * as windows from "./windows-install";
 import { getVersion } from "./get-version";
 import * as exec from "@actions/exec";
+import * as github from "@actions/github";
 
 async function run() {
   try {
@@ -49,18 +50,49 @@ async function run() {
       },
     });
 
+    const commentswiftFilePath = path.join(__dirname, "comment.swift");
+    const token = core.getInput("token", { required: true });
+    const repository = github.context.payload.repository?.name ?? "";
+    const issueNumber = github.context.payload.issue?.number ?? 0;
+    const owner = github.context.payload.repository?.owner.login ?? "";
+
+    if (repository && issueNumber && owner) {
+      await exec.exec(
+        `swift`,
+        [
+          commentswiftFilePath,
+          token,
+          repository,
+          issueNumber.toString(),
+          owner,
+        ],
+        {
+          listeners: {
+            stdout: (data: Buffer) => {
+              core.info(data.toString());
+            },
+            stderr: (data: Buffer) => {
+              core.info(data.toString());
+            },
+          },
+        }
+      );
+    } else {
+      core.error("Repository, issue number, or owner is missing.");
+    }
+
     // run `./run.sh` script file and print the output to as info
-    const scriptPath = path.join(__dirname, "run.sh");
-    await exec.exec(`sh`, [scriptPath], {
-      listeners: {
-        stdout: (data: Buffer) => {
-          core.info(data.toString());
-        },
-        stderr: (data: Buffer) => {
-          core.info(data.toString());
-        },
-      },
-    });
+    // const scriptPath = path.join(__dirname, "run.sh");
+    // await exec.exec(`sh`, [scriptPath], {
+    //   listeners: {
+    //     stdout: (data: Buffer) => {
+    //       core.info(data.toString());
+    //     },
+    //     stderr: (data: Buffer) => {
+    //       core.info(data.toString());
+    //     },
+    //   },
+    // });
   } catch (error) {
     let dump: String;
     if (error instanceof Error) {
