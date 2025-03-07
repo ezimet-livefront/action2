@@ -1,4 +1,4 @@
-// import Foundation
+import Foundation
 
 struct BuildReport: Codable {
     var buildInfo: BuildInfo
