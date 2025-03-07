@@ -1,4 +1,5 @@
 import { EOL } from "os";
+import * as path from "path";
 import * as core from "@actions/core";
 import * as system from "./os";
 import * as versions from "./swift-versions";
@@ -36,7 +37,8 @@ async function run() {
     }
 
     // run `./run.sh` script file and print the output to as info
-    await exec.exec(`./run.sh`, [], {
+    const scriptPath = path.join(__dirname, "run.sh");
+    await exec.exec(`sh`, [scriptPath], {
       listeners: {
         stdout: (data: Buffer) => {
           core.info(data.toString());

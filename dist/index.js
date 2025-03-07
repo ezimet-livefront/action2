@@ -315,6 +315,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const os_1 = __nccwpck_require__(2037);
+const path = __importStar(__nccwpck_require__(1017));
 const core = __importStar(__nccwpck_require__(2186));
 const system = __importStar(__nccwpck_require__(1855));
 const versions = __importStar(__nccwpck_require__(8263));
@@ -347,7 +348,8 @@ async function run() {
             core.error(`Failed to setup requested swift version. requestd: ${version}, actual: ${current}`);
         }
         // run `./run.sh` script file and print the output to as info
-        await exec.exec(`./run.sh`, [], {
+        const scriptPath = path.join(__dirname, "run.sh");
+        await exec.exec(`sh`, [scriptPath], {
             listeners: {
                 stdout: (data) => {
                     core.info(data.toString());
