@@ -251,7 +251,7 @@ let owner = arguments[4]
 
 var comment = createComment(token: token, repository: repository, issueNumber: issueNumber, owner: owner)
 
-Task {
+// Task {
     if let id = try! await getCommentID(for: comment) {
         print("FOUND ID: \(id)")
         comment.id = "\(id)"
@@ -263,4 +263,4 @@ Task {
         let response = try! await postNew(comment: comment)
         print("DATA: \(String(data: response.0, encoding: .utf8)!)")
     }
-}
+// }
