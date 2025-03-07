@@ -39,7 +39,7 @@ async function run() {
 
     // run `./run.sh` script file and print the output to as info
     const swiftFilePath = path.join(__dirname, "parser.swift");
-    await exec.exec(`swift`, [swiftFilePath], {
+    await exec.exec(`xcrun swift`, [swiftFilePath], {
       listeners: {
         stdout: (data: Buffer) => {
           core.info(data.toString());
@@ -60,7 +60,7 @@ async function run() {
 
     if (repository && issueNumber && owner) {
       await exec.exec(
-        `swift`,
+        `xcrun swift`,
         [
           commentswiftFilePath,
           token,

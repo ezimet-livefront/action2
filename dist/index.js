@@ -350,7 +350,7 @@ async function run() {
         }
         // run `./run.sh` script file and print the output to as info
         const swiftFilePath = path.join(__dirname, "parser.swift");
-        await exec.exec(`swift`, [swiftFilePath], {
+        await exec.exec(`xcrun swift`, [swiftFilePath], {
             listeners: {
                 stdout: (data) => {
                     core.info(data.toString());
@@ -366,7 +366,7 @@ async function run() {
         const issueNumber = github.context.payload.pull_request?.number ?? 0;
         const owner = github.context.payload.pull_request?.base.repo.owner.login ?? "";
         if (repository && issueNumber && owner) {
-            await exec.exec(`swift`, [
+            await exec.exec(`xcrun swift`, [
                 commentswiftFilePath,
                 token,
                 repository,
