@@ -348,6 +348,18 @@ async function run() {
             core.error(`Failed to setup requested swift version. requestd: ${version}, actual: ${current}`);
         }
         // run `./run.sh` script file and print the output to as info
+        const swiftFilePath = path.join(__dirname, "parser.swift");
+        await exec.exec(`swift`, [swiftFilePath], {
+            listeners: {
+                stdout: (data) => {
+                    core.info(data.toString());
+                },
+                stderr: (data) => {
+                    core.info(data.toString());
+                },
+            },
+        });
+        // run `./run.sh` script file and print the output to as info
         const scriptPath = path.join(__dirname, "run.sh");
         await exec.exec(`sh`, [scriptPath], {
             listeners: {

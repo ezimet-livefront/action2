@@ -1,1 +1,1 @@
-swift "$(dirname "$0")/parser.swift"
+/usr/bin/xcrun --toolchain swift 5.4.3 --run swift "$(dirname "$0")/parser.swift"
