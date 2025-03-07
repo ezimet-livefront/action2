@@ -1,1 +1,1 @@
-swift ./parser.swift
+swift "$(dirname "$0")/parser.swift"
