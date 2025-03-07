@@ -1,1 +1,1 @@
-swift parser.swift
+swift ./parser.swift
